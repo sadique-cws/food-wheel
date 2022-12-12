@@ -1,6 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const Order = () => {
+const Order = ({order}) => {
+    const [show, setShow] = useState(false)
+    let [totalPrice, setTotalPrice] = useState(0)
+
+    const handleTotal = () => {
+        let total = 0;
+        order.map(value => {
+            total += value.total
+        })
+        setTotalPrice(total)
+        setShow(true);
+    }
     return (
         <div className='mt-10 p-4'>
             <table className='border w-full'>
@@ -11,65 +22,29 @@ const Order = () => {
                     <th className='border p-2 border-slate-400'>Amount</th>
                     <th className='border p-2 border-slate-400'>Total</th>
                 </tr>
-                <tr>
-                    <td className='border p-2 border-slate-400'>1</td>
-                    <td className='border p-2 border-slate-400'>Momos</td>
-                    <td className='border p-2 border-slate-400'>3</td>
-                    <td className='border p-2 border-slate-400'>500</td>
-                    <td className='border p-2 border-slate-400'>1500</td>
+                
+               {
+                order.map((value, i) => (
+                    <tr key={i}>
+                    <td className='border p-2 border-slate-400'>{value.id}</td>
+                    <td className='border p-2 border-slate-400'>{value.title}</td>
+                    <td className='border p-2 border-slate-400'>{value.qty}</td>
+                    <td className='border p-2 border-slate-400'>{value.price}</td>
+                    <td className='border p-2 border-slate-400'>{value.total}</td>
                 </tr>
-                <tr>
-                    <td className='border p-2 border-slate-400'>1</td>
-                    <td className='border p-2 border-slate-400'>Momos</td>
-                    <td className='border p-2 border-slate-400'>3</td>
-                    <td className='border p-2 border-slate-400'>500</td>
-                    <td className='border p-2 border-slate-400'>1500</td>
-                </tr>
-                <tr>
-                    <td className='border p-2 border-slate-400'>1</td>
-                    <td className='border p-2 border-slate-400'>Momos</td>
-                    <td className='border p-2 border-slate-400'>3</td>
-                    <td className='border p-2 border-slate-400'>500</td>
-                    <td className='border p-2 border-slate-400'>1500</td>
-                </tr>
-                <tr>
-                    <td className='border p-2 border-slate-400'>1</td>
-                    <td className='border p-2 border-slate-400'>Momos</td>
-                    <td className='border p-2 border-slate-400'>3</td>
-                    <td className='border p-2 border-slate-400'>500</td>
-                    <td className='border p-2 border-slate-400'>1500</td>
-                </tr>
-                <tr>
-                    <td className='border p-2 border-slate-400'>1</td>
-                    <td className='border p-2 border-slate-400'>Momos</td>
-                    <td className='border p-2 border-slate-400'>3</td>
-                    <td className='border p-2 border-slate-400'>500</td>
-                    <td className='border p-2 border-slate-400'>1500</td>
-                </tr>
-                <tr>
-                    <td className='border p-2 border-slate-400'>1</td>
-                    <td className='border p-2 border-slate-400'>Momos</td>
-                    <td className='border p-2 border-slate-400'>3</td>
-                    <td className='border p-2 border-slate-400'>500</td>
-                    <td className='border p-2 border-slate-400'>1500</td>
-                </tr>
-                <tr>
-                    <td className='border p-2 border-slate-400'>1</td>
-                    <td className='border p-2 border-slate-400'>Momos</td>
-                    <td className='border p-2 border-slate-400'>3</td>
-                    <td className='border p-2 border-slate-400'>500</td>
-                    <td className='border p-2 border-slate-400'>1500</td>
-                </tr>
+                ))
+               }
             </table>
-
-
+            
             <div className="absolute bottom-0  gap-3 p-4">
-                <div className='flex flex-col mb-2'>
-                    <h1 className='text-6xl font-black'>₹ 5600/- <span className="text-slate-500 text-lg"><del>₹7000/-</del></span></h1>
+                {
+                    show && <div className='flex flex-col mb-2'>
+                    <h1 className='text-6xl font-black'>₹ {totalPrice}/- <span className="text-slate-500 text-lg"><del>₹7000/-</del></span></h1>
                 </div>
+                }
                 <div className='flex'>
                     <button className="bg-gray-600 hover:bg-gray-800 text-white  px-5 py-2 text-2xl font-bold uppercase">Reset</button>
-                    <button className="bg-orange-600 hover:bg-orange-800 text-white  px-10 py-2 text-2xl font-bold uppercase">Order Now</button>
+                    <button onClick={handleTotal} className="bg-orange-600 hover:bg-orange-800 text-white  px-10 py-2 text-2xl font-bold uppercase">Order Now</button>
                     <button className="bg-teal-600 hover:bg-teal-800 text-white  px-10 py-2 text-2xl font-bold uppercase">Save</button>
                 </div>
 
